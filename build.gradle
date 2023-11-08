@@ -45,6 +45,7 @@ task defaultTest(type: Test) {
 test.dependsOn defaultTest
 
 test {
+    systemProperty 'java.awt.headless', 'true'
     useJUnitPlatform()
     finalizedBy jacocoTestReport
 }
