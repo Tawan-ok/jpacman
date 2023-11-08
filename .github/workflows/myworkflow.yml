@@ -26,12 +26,16 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
+
+    - name: Set up Xvfb
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y xvfb
+        sudo Xvfb :99 -ac &
+        echo "DISPLAY=:99.0" >> $GITHUB_ENV
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew build --stacktrace --scan
-      env:
-        CI: true
-        JAVA_OPTS: "-Djava.awt.headless=true"
 
-
+    - name: Build with Gradle (Headless)
+      run: ./gradlew build
